@@ -28,10 +28,10 @@
     }
 
     class Todo implements Task {
-        id: string;
-        dateCreated: Date;
-        dateUpdated: Date;
-        description: string;
+        id: string = '';
+        dateCreated: Date = new Date();
+        dateUpdated: Date = new Date();
+        description: string = '';
 
         done: boolean = false;
 
