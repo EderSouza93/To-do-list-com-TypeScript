@@ -1,4 +1,20 @@
 (() => {
+    enum NotificationPlatform {
+        SMS = 'SMS',
+        EMAIL = 'EMAIL',
+        PUSH_NOTIFICATION = 'PUSH_NOTIFICATION',
+    }
+
+    const UUID = (): string => {
+        return Math.random().toString(32).substr(2, 9);
+    };
+
+    const DateUtils = {
+        formatDate(date: Date): string {
+            return `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`
+        }
+    }
+
     interface Task {
         id: string;
         dateCreated: Date;
@@ -8,27 +24,32 @@
     }
 
     class Reminder implements Task {
-        id: string = '';
+        id: string = UUID();
         dateCreated: Date = new Date();
         dateUpdated: Date = new Date();
         description: string = '';
 
         date: Date = new Date();
-        notifications: Array<string> = ['EMAIL'];
+        notifications: Array<NotificationPlatform> = [NotificationPlatform.EMAIL];
 
-        constructor(description: string, date: Date, notifications: Array<string>) {
+        constructor(description: string, date: Date, notifications: Array<NotificationPlatform>) {
             this.description = description;
             this.date = date;
-            this.notifications = notifications;
+            this.notifications = notifications
         }
 
         render(): string {
-            return JSON.stringify(this);
+            return `
+            ---> Reminder <---
+            description: ${this.description}
+            date: ${DateUtils.}
+            platform: ${this.notifications.join(',')}
+            `;
         }
     }
 
     class Todo implements Task {
-        id: string = '';
+        id: string = UUID();
         dateCreated: Date = new Date();
         dateUpdated: Date = new Date();
         description: string = '';
@@ -45,7 +66,8 @@
     }
     const todo = new Todo('Todo criado com a classe');
 
-    const remind = new Reminder('Reminder criado com a classe', new Date(), ['EMAIL']);
+    const remind = new Reminder('Reminder criado com a classe', new Date(), [NotificationPlatform.EMAIL,
+    ]);
 
     const taskView = {
         render(tasks: Array<Task>) {
